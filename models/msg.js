@@ -8,5 +8,5 @@ var MsgSchema = new Schema({
   match: Boolean
 });
 
-var Msg = mongoose.model('Msg', msgSchema);
+var Msg = mongoose.model('Msg', MsgSchema);
 module.exports = Msg;

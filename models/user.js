@@ -7,8 +7,8 @@ var UserSchema = new Schema({
   userName: String,
   phoneNum: Number,
   location: String,
-  msg: [Msg],
-  meet: Meet,
+  msg: [Msg.schema],
+  meet: Meet.schema,
   remindText: Boolean
 });
 

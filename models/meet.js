@@ -1,10 +1,10 @@
-var monngoose = require('mongoose'),
+var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var MeetSchema = new Schema({
-  userId: String,
   date: Date,
-  postText: String
+  postText: String,
+  comments: [String]
 });
 
 var Meet = mongoose.model('Meet', MeetSchema);
