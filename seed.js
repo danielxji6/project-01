@@ -15,7 +15,7 @@ userList.push({
 userList.push({
   userName: "cryingpuppy",
   phoneNum: 1231231234,
-  location: "cryingpuppy",
+  location: "SF, CA",
   msg: [],
   meet: {},
   remindText: true
@@ -23,7 +23,7 @@ userList.push({
 userList.push({
   userName: "lifeisgood",
   phoneNum: 1231231234,
-  location: "lifeisgood",
+  location: "SF, CA",
   msg: [],
   meet: {},
   remindText: true

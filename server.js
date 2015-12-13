@@ -103,7 +103,13 @@ app.delete('/api/user/:id', function api_delete_user (req, res) {
   });
 });
 
-app.get('/api/:userId/msg', function api_msg (req, res) {});
+app.get('/api/:userId/msg', function api_msg (req, res) {
+  var userId = req.params.userId;
+  db.User.findOne({_id: userId}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    res.json({msg: user.msg});
+  });
+});
 
 app.post('/api/:userId/msg', function api_create_msg (req, res) {});
 

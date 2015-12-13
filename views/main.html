@@ -25,29 +25,34 @@
       </div>
     </div>
     <div id="msg-list">
-      <!-- Massages template -->
-      <div class="row msg" data-msg-id="{{_id}}">
-        <div class="col-md-6 col-md-offset-3">
-          <div class="panel panel-default">
-            <!-- no panel body -->
-            <div class="row">
-              <div class="container-fluid">
-                <button class="btn btn-clear pull-right delete">X</button>
-                <span>to {{toName}} (#{{phone number}})</sapn><br>
-                <span><samll>{{Date}}</samll></span>
-              </div>
-              <div class="col-md-6 col-md-offset-1">
-                <br><p class="msg-box">Hi asdf asdfasd a asdf a fsadasdf asdf asdf asdf asdf asdf asdf asdf asd f</p>
-                <button class="btn btn-default btn-sm edit">Edit Massage</button>
+
+      <!-- handlebars template -->
+      <script id="msg-template" type="text/x-handlebars-template">
+        <div class="row msg" data-msg-id="{{_id}}">
+          {{#each msg}}
+          <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+              <!-- no panel body -->
+              <div class="row">
+                <div class="container-fluid">
+                  <button class="btn btn-clear pull-right delete">X</button>
+                  <span>to {{toName}} (#{{toNum}})</sapn><br>
+                  <span><samll>{{date}}</samll></span>
+                </div>
+                <div class="col-md-6 col-md-offset-1">
+                  <br><p class="msg-box">{{msgText}}</p>
+                  <button class="btn btn-default btn-sm edit">Edit Massage</button>
+                </div>
               </div>
             </div>
           </div>
+          {{/each}}
+          <div class="col-md-6 col-md-offset-3 row new-msg">
+            <button id="new-msg" class="btn btn-default btn-block">+ New Massage</button>
+            <a href="/meet" class="btn btn-default">Meet</a>
+          </div>
         </div>
-        <div class="col-md-6 col-md-offset-3 row new-msg">
-          <button id="new-msg" class="btn btn-default btn-block">+ New Massage</button>
-          <a href="/meet" class="btn btn-default">Meet</a>
-        </div>
-      </div>
+      </script>
     </div>
   </body>
 </html>
