@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- VENDOR SCRIPTS -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+
+    <!-- APPLICATION SCRIPTS -->
+    <script src="js/login.js"></script>
+    <title>ex.talk</title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>ex.talk</h1>
+        <p>If there's a if..</p>
+      </div>
+    </div>
+    <!-- Sign up form -->
+    <section class="container">
+     <div class="row">
+     <div class="col-md-10 col-md-offset-1">
+       <form class="form-horizontal"  id='signup-form'>
+         <fieldset>
+           <h2>Sign Up</h2><hr>
+           <!-- Text input-->
+           <div class="form-group">
+             <div class="col-md-4">
+             <input id="userName" name="userName" type="text" placeholder="User Name" class="form-control input-md" autocomplete="off" required="">
+             </div>
+           </div>
+           <!-- Text input-->
+           <div class="form-group">
+             <div class="col-md-4">
+             <input id="phoneNum" name="phoneNum" type="text" placeholder="Phone Number (digit only)" class="form-control input-md" autocomplete="off" required="">
+             </div>
+           </div>
+           <!-- Button -->
+           <div class="form-group">
+             <div class="col-md-4">
+               <button id="signUp" name="singlebutton" class="btn btn-default">Sign Up</button>
+             </div>
+           </div>
+         </fieldset>
+       </form>
+     </div>
+     </div>
+   </section>
+
+   <!-- Log in form -->
+   <section class="container">
+    <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <form class="form-horizontal"  id='login-form'>
+        <fieldset>
+          <h2>Log In</h2><hr>
+          <!-- Text input-->
+          <div class="form-group form-inline">
+            <div class="col-md-4">
+            <input id="loginName" name="userName" type="text" placeholder="User Name" class="form-control input-md" autocomplete="off" required="">
+            <p hidden id="wrongUser" style="color: red">* user name can't find.</p>
+            </div>
+          </div>
+          <!-- Button -->
+          <div class="form-group">
+            <div class="col-md-4">
+              <button id="logIn" name="singlebutton" class="btn btn-default">Log In</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    </div>
+   </section>
+
+  </body>
+</html>

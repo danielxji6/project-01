@@ -1,0 +1,15 @@
+.jumbotron {
+  background-image: url(/img/background1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #050505;
+}
+.jumbotron .container {
+  height: 200px;
+}
+
+.inline-header {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 12px;
+}

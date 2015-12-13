@@ -79,10 +79,10 @@ app.post('/api/user', function api_create_user (req, res) {
   });
 });
 
-app.put('/api/user/:name', function api_edit_user (req, res) {
-  var name = req.params.name;
+app.put('/api/user/:id', function api_edit_user (req, res) {
+  var id = req.params.id;
   var data = req.body;
-  db.User.findOne({userName: name}, function (err, user) {
+  db.User.findOne({_id: id}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     user.userName = data.userName;
     user.phoneNum = data.phoneNum;
