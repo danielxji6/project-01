@@ -103,13 +103,13 @@ app.delete('/api/user/:id', function api_delete_user (req, res) {
   });
 });
 
-app.get('/api/msg', function api_msg (req, res) {});
+app.get('/api/:userId/msg', function api_msg (req, res) {});
 
-app.post('/api/msg', function api_create_msg (req, res) {});
+app.post('/api/:userId/msg', function api_create_msg (req, res) {});
 
-app.put('/api/msg', function api_edit_msg (req, res) {});
+app.put('/api/:userId/msg/:msgId', function api_edit_msg (req, res) {});
 
-app.delete('/api/msg', function api_delete_msg (req, res) {});
+app.delete('/api/:userId/msg/:msgId', function api_delete_msg (req, res) {});
 
 
 /**********
