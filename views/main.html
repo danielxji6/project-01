@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- VENDOR SCRIPTS -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+
+    <!-- APPLICATION SCRIPTS -->
+    <script src="js/main.js"></script>
+    <title>ex.talk</title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Hi, </h1>
+        <a href="/profile">edit profile</a>
+      </div>
+    </div>
+    <!-- Massages template -->
+    <div class="row msg" data-msg-id="{{_id}}">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+          <!-- no panel body -->
+          <div class="row">
+            <div class="container-fluid">
+              <button class="btn btn-clear pull-right delete">X</button>
+              <span>to {{toName}} (#{{phone number}})</sapn><br>
+              <span><samll>{{Date}}</samll></span>
+            </div>
+            <div class="col-md-6 col-md-offset-1 msg">
+              <br><p>Hi asdf asdfasd a asdf a fsadasdf asdf asdf asdf asdf asdf asdf asdf asd f</p>
+              <button class="btn btn-default btn-sm edit">Edit Massage</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-md-offset-3 row new-msg">
+        <button id="new-msg" class="btn btn-default btn-block">+ New Massage</button>
+        <a href="/meet" class="btn btn-default">Meet</a>
+      </div>
+      <div>
+      <div>
+      </div>
+  </body>
+</html>

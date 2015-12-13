@@ -32,12 +32,14 @@ userList.push({
 var sampleMsg = [];
 sampleMsg.push({
   date: new Date(),
+  toName: "Cindy",
   toNum: 3213214321,
   msgText: "I wish we can...",
   match: false
 });
 sampleMsg.push({
   date: new Date(),
+  toName: "Min",
   toNum: 852741963232,
   msgText: "You are such a...",
   match: false

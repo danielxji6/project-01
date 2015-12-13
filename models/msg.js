@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 
 var MsgSchema = new Schema({
   date: Date,
+  toName: String,
   toNum: Number,
   msgText: String,
   match: Boolean
