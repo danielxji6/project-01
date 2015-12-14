@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- VENDOR SCRIPTS -->
+    <script type="text/javascript" src="/jquery-2.1.4/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/handlebars-v4.0.5/handlebars-v4.0.5.js"></script>
+
+    <!-- APPLICATION SCRIPTS -->
+    <script src="js/new.js"></script>
+    <title>ex.talk</title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>To ex, </h1>
+      </div>
+    </div>
+
+    <!-- From section -->
+    <section class="container">
+     <div class="row">
+     <div class="col-md-6 col-md-offset-1">
+
+       <form class="form-horizontal"  id='msg-form'>
+         <fieldset>
+
+           <!-- Form Name -->
+           <legend>Add New Massage</legend>
+
+           <!-- Text input-->
+           <div class="form-group">
+             <label class="col-md-4 control-label" for="toName">His/Her Name</label>
+             <div class="col-md-4">
+             <input id="toName" name="toName" type="text" placeholder="" class="form-control input-md" required="">
+             </div>
+           </div>
+
+           <!-- Text input-->
+           <div class="form-group">
+             <label class="col-md-4 control-label" for="toNum">Phone Name</label>
+             <div class="col-md-4">
+             <input id="toNum" name="toNum" type="text" placeholder="" class="form-control input-md" required="">
+             </div>
+           </div>
+
+           <!-- Text input-->
+           <div class="form-group">
+             <label class="col-md-4 control-label" for="msgText">Massage</label>
+             <div class="col-md-4">
+             <input id="msgText" name="msgText" type="text" placeholder="" class="form-control input-md" required="">
+
+             </div>
+           </div>
+
+           <!-- Button -->
+           <div class="form-group">
+             <label class="col-md-4 control-label" for="singlebutton"></label>
+             <div class="col-md-4">
+               <button id="submitMsg" name="singlebutton" class="btn btn-primary">Send Massage</button>
+             </div>
+           </div>
+         </fieldset>
+       </form>
+     </div>
+     </div>
+   </section>
+
+  </body>
+</html>

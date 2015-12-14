@@ -28,8 +28,8 @@
 
       <!-- handlebars template -->
       <script id="msg-template" type="text/x-handlebars-template">
+        {{#each msg}}
         <div class="row msg" data-msg-id="{{_id}}">
-          {{#each msg}}
           <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
               <!-- no panel body -->
@@ -46,11 +46,11 @@
               </div>
             </div>
           </div>
-          {{/each}}
-          <div class="col-md-6 col-md-offset-3 row new-msg">
-            <button id="new-msg" class="btn btn-default btn-block">+ New Massage</button>
-            <a href="/meet" class="btn btn-default">Meet</a>
-          </div>
+        </div>
+        {{/each}}
+        <div class="col-md-6 col-md-offset-3 row new-msg">
+          <button id="new-msg" class="btn btn-default btn-block">+ New Massage</button>
+          <br><a href="/meet" class="btn btn-default">Meet</a>
         </div>
       </script>
     </div>

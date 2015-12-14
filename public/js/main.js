@@ -8,7 +8,6 @@ $(document).ready(function() {
   var userId = "566dfec4aa613b470a202b76"; //TODO: get from the authorisation!!!
 
   $.get('/api/'+userId+'/msg', function (msgs) {
-    console.log(msgs);
     var msgHtml = template(msgs);
     $('#msg-list').html(msgHtml);
   });
@@ -45,13 +44,13 @@ $(document).ready(function() {
       $.ajax({
         method: 'PUT',
         url: url,
+        data: {msgText: $saveBox.val()},
         success: function (response) {
-          console.log();
-          $saveBox.replaceWith('<p class="msg-box" rows="5">'+ $saveBox.val() +'</p>');
-          $(this).text("Edit Massage");
-          $(this).addClass("edit").removeClass("edit-save");
+          $saveBox.replaceWith('<p class="msg-box" rows="5">'+ response.msgText +'</p>');
         }
       });
+      $(this).text("Edit Massage");
+      $(this).addClass("edit").removeClass("edit-save");
     });
 
   $('#new-msg').on('click', function handleNew(event) {

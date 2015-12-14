@@ -10,6 +10,7 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/vendor'));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -34,7 +35,7 @@ app.get('/main', function home_page (req, res) {
 });
 
 app.get('/new', function new_msg_page (req, res) {
-  res.sendFile(__dirname + '/views/new_msg.html');
+  res.sendFile(__dirname + '/views/new.html');
 });
 
 app.get('/match', function match_page (req, res) {
@@ -113,7 +114,23 @@ app.get('/api/:userId/msg', function api_msg (req, res) {
 
 app.post('/api/:userId/msg', function api_create_msg (req, res) {});
 
-app.put('/api/:userId/msg/:msgId', function api_edit_msg (req, res) {});
+app.put('/api/:userId/msg/:msgId', function api_edit_msg (req, res) {
+  var userId = req.params.userId;
+  var msgId = req.params.msgId;
+  var msgData = req.body;
+  db.User.findOne({_id: userId}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    user.msg.forEach(function (ele, index) {
+      if(ele._id == msgId) {
+          ele.msgText = msgData.msgText;
+          user.save(function (err, savedUser) {
+          if(err) { return console.log("ERROR: ", err);}
+          res.json(ele);
+        });
+      }
+    });
+  });
+});
 
 app.delete('/api/:userId/msg/:msgId', function api_delete_msg (req, res) {});
 
