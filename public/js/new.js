@@ -8,7 +8,11 @@ $(function() {
   $('#msg-form').on('submit', function handleFrom(event) {
     event.preventDefault();
     var newMsg = $('#msg-form').serialize();
-    console.log(newMsg);
+    var url = '/api/' + userId + '/msg';
+    $.post(url, newMsg, function (response) {
+      console.log("New Massage Created");
+      window.location.href = '/main';
+    });
   });
 
 

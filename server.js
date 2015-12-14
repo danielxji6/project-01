@@ -58,7 +58,7 @@ app.get('/meet', function meet_page (req, res) {
 app.get('/api', function api_index (req, res){
   res.json({
     message: "Welcome to my personal api!",
-    documentation_url: "https://github.com/phnxdaniel/ex.talk",
+    documentation_url: "https://github.com/phnxdaniel/project-01",
     base_url: "",
     endpoints: [
       {method: "GET", path: "/api", description: "Describes available endpoints"}
@@ -112,7 +112,17 @@ app.get('/api/:userId/msg', function api_msg (req, res) {
   });
 });
 
-app.post('/api/:userId/msg', function api_create_msg (req, res) {});
+app.post('/api/:userId/msg', function api_create_msg (req, res) {
+  var userId = req.params.userId;
+  var newMsg = req.body;
+  db.User.findOne({_id: userId}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    user.msg.push(newMsg);
+    user.save(function (err, savedUser) {
+      res.json(savedUser);
+    });
+  });
+});
 
 app.put('/api/:userId/msg/:msgId', function api_edit_msg (req, res) {
   var userId = req.params.userId;
@@ -132,7 +142,22 @@ app.put('/api/:userId/msg/:msgId', function api_edit_msg (req, res) {
   });
 });
 
-app.delete('/api/:userId/msg/:msgId', function api_delete_msg (req, res) {});
+app.delete('/api/:userId/msg/:msgId', function api_delete_msg (req, res) {
+  var userId = req.params.userId;
+  var msgId = req.params.msgId;
+  db.User.findOne({_id: userId}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    user.msg.forEach(function (ele, index) {
+      if(ele._id == msgId) {
+          var deleteMsg = user.msg.splice(index, 1);
+          user.save(function (err, savedUser) {
+          if(err) { return console.log("ERROR: ", err);}
+          res.json(deleteMsg);
+        });
+      }
+    });
+  });
+});
 
 
 /**********

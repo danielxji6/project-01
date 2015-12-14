@@ -51,10 +51,27 @@ $(document).ready(function() {
       });
       $(this).text("Edit Massage");
       $(this).addClass("edit").removeClass("edit-save");
+    })
+
+    .on('click', '.delete-msg', function handleDelete(event) {
+      var msgId = $(this).parents('.msg').data('msg-id');
+      var msgDiv = '[data-msg-id="'+ msgId + '"]';
+      var url = '/api/' + userId + '/msg/' + msgId;
+      console.log("delete on!");
+      $.ajax({
+        method: 'DELETE',
+        url: url,
+        success: function (response) {
+          $(msgDiv).fadeOut();
+          setTimeout(function() {$(msgDiv).remove();}, 400);
+        }
+      });
     });
 
-  $('#new-msg').on('click', function handleNew(event) {
-    window.location.href = '/new-msg.html'; //TODO!!!
+  $('#msg-list').on('click', '#new-msg', function handleNew(event) {
+    window.location.href = '/new'; //TODO!!!
   });
+
+
 
 });

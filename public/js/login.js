@@ -9,7 +9,7 @@ $(document).ready(function() {
     $.post('/api/user', user, function (response) {
       console.log("User Created!");
       //TODO: add authorisation
-      window.location.href = '/main.html';
+      window.location.href = '/main';
     });
   });
 
@@ -20,7 +20,7 @@ $(document).ready(function() {
       console.log(response);
       if(response) {
         //TODO: add authorisation
-        window.location.href = '/main.html';
+        window.location.href = '/main';
       } else {
         $('#wrongUser').show();
       }
