@@ -5,10 +5,15 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     request = require('request'),
+    session = require('express-session'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
     db = require('./models');
 
+// configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/vendor'));
 
@@ -17,6 +22,21 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
+
+// middleware for auth
+app.use(cookieParser());
+app.use(session({
+  secret: 'supersecretkey',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport config
+passport.use(new LocalStrategy(db.User.authenticate()));
+passport.serializeUser(db.User.serializeUser());
+passport.deserializeUser(db.User.deserializeUser());
 
 /**********
  * ROUTES *
@@ -27,7 +47,7 @@ app.use(function(req, res, next) {
  */
 
 app.get('/', function login_page (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.sendFile(__dirname + '/views/login.html');
 });
 
 app.get('/main', function home_page (req, res) {
@@ -48,6 +68,48 @@ app.get('/profile', function profile_page (req, res) {
 
 app.get('/meet', function meet_page (req, res) {
   res.sendFile(__dirname + '/views/meet.html');
+});
+
+/*
+ * Auth Endpoints
+ */
+
+// sign up new user, then log them in
+// hashes and salts password, saves new user to db
+app.post('/signup', function (req, res) {
+  // if user is logged in, don't let them sign up again
+  if (req.user) {
+    res.redirect('/main');
+  } else {
+    db.User.register(new db.User({ username: req.body.username }), req.body.password,
+      function (err, newUser) {
+        passport.authenticate('local')(req, res, function () {
+          res.redirect('/main');
+        });
+      }
+    );
+  }
+});
+
+// log in user
+app.post('/login', passport.authenticate('local'), function (req, res) {
+  res.redirect('/main');
+});
+
+// log out user
+app.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+// show user profile page
+app.get('/profile', function (req, res) {
+  // only show profile if user is logged in
+  if (req.user) {
+    res.render('profile', { user: req.user });
+  } else {
+    res.redirect('/login');
+  }
 });
 
 /*
@@ -119,7 +181,7 @@ app.post('/api/:userId/msg', function api_create_msg (req, res) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.push(newMsg);
     user.save(function (err, savedUser) {
-      res.json(savedUser);
+      res.redirect('/main');
     });
   });
 });

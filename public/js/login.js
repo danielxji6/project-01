@@ -5,8 +5,8 @@ $(document).ready(function() {
 
   $('#signup-form').on('submit', function handleSignup (event) {
     event.preventDefault();
-    var user = $('#signup-form').serialize();
-    $.post('/api/user', user, function (response) {
+    var data = $('#signup-form').serialize();
+    $.post('/signup', data, function (response) {
       console.log("User Created!");
       //TODO: add authorisation
       window.location.href = '/main';
@@ -15,15 +15,13 @@ $(document).ready(function() {
 
   $('#login-form').on('submit', function handleLogin (event) {
     event.preventDefault();
-    var url =  '/api/user/' + $('#loginName').val();
-    $.get(url, function (response) {
-      console.log(response);
-      if(response) {
-        //TODO: add authorisation
-        window.location.href = '/main';
-      } else {
-        $('#wrongUser').show();
-      }
+    var data = $('#login-form').serialize();
+    $.post('/login', data)
+    .success(function (response) {
+
+    })
+    .error(function (err) {
+      $('#wrongUser').show();
     });
 
   });

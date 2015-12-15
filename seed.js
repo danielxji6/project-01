@@ -5,7 +5,8 @@ var db = require('./models');
 // Data sheet
 var userList = [];
 userList.push({
-  userName: "test1",
+  username: "test1",
+  // password:
   phoneNum: 1231231234,
   location: "test1",
   msg: [],
@@ -65,10 +66,10 @@ userList.forEach(function (ele, index) {
   //   });
   // });
 db.User.remove({}, function (err) {
-  db.User.create(userList, function (err, users) {
-    if(err) { return console.log("ERROR: ", err);}
-    console.log("Created", users.length, " users");
-    console.log("All user: \n", users);
-    process.exit();
-  });
+  // db.User.create(userList, function (err, users) {
+  //   if(err) { return console.log("ERROR: ", err);}
+  //   console.log("Created", users.length, " users");
+  //   console.log("All user: \n", users);
+  //   process.exit();
+  // });
 });
