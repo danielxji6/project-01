@@ -4,6 +4,7 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
+    hbs = require('hbs'),
     request = require('request'),
     session = require('express-session'),
     passport = require('passport'),
@@ -17,6 +18,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/vendor'));
 
+// set view engine to hbs and serve partials folder
+app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+
+// Set file open ??
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -47,27 +53,47 @@ passport.deserializeUser(db.User.deserializeUser());
  */
 
 app.get('/', function login_page (req, res) {
-  res.sendFile(__dirname + '/views/login.html');
+  res.render('login');
 });
 
 app.get('/main', function home_page (req, res) {
-  res.sendFile(__dirname + '/views/main.html');
+  if (req.user) {
+    res.render('main', { user: req.user });
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/new', function new_msg_page (req, res) {
-  res.sendFile(__dirname + '/views/new.html');
+  if (req.user) {
+    res.render('new');
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/match', function match_page (req, res) {
-  res.sendFile(__dirname + '/views/match.html');
+  if (req.user) {
+    res.render('match');
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/profile', function profile_page (req, res) {
-  res.sendFile(__dirname + '/views/profile.html');
+  if (req.user) {
+    res.render('profile');
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/meet', function meet_page (req, res) {
-  res.sendFile(__dirname + '/views/meet.html');
+  if (req.user) {
+    res.render('meet');
+  } else {
+    res.redirect('/');
+  }
 });
 
 /*
@@ -103,7 +129,7 @@ app.get('/logout', function (req, res) {
 });
 
 // show user profile page
-app.get('/profile', function (req, res) {
+app.get('/profile_F', function (req, res) {
   // only show profile if user is logged in
   if (req.user) {
     res.render('profile', { user: req.user });
