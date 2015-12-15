@@ -8,7 +8,6 @@ $(document).ready(function() {
     var data = $('#signup-form').serialize();
     $.post('/signup', data, function (response) {
       console.log("User Created!");
-      //TODO: add authorisation
       window.location.href = '/main';
     });
   });
@@ -18,9 +17,10 @@ $(document).ready(function() {
     var data = $('#login-form').serialize();
     $.post('/login', data)
     .success(function (response) {
-
+      window.location.href = '/main';
     })
     .error(function (err) {
+      console.log(err);
       $('#wrongUser').show();
     });
 

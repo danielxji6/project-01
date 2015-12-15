@@ -128,54 +128,54 @@ app.get('/api', function api_index (req, res){
   });
 });
 
-app.get('/api/user/:name', function api_user (req, res) {
-  var name = req.params.name;
-  db.User.findOne({userName: name}, function (err, user) {
-    res.json(user);
-  });
-});
-
-app.post('/api/user', function api_create_user (req, res) {
-  var data = req.body;
-  db.User.create(data, function (err, user) {
-    res.json(user);
-  });
-});
-
-app.put('/api/user/:id', function api_edit_user (req, res) {
-  var id = req.params.id;
-  var data = req.body;
-  db.User.findOne({_id: id}, function (err, user) {
-    if(err) { return console.log("ERROR: ", err);}
-    user.userName = data.userName;
-    user.phoneNum = data.phoneNum;
-    user.location = data.location;
-    user.remindText = data.remindText;
-    user.save(function (err, savedUser) {
-      if(err) { return console.log("ERROR: ", err);}
-      res.json(savedUser);
-    });
-  });
-});
+// app.get('/api/user/:name', function api_user (req, res) {
+//   var name = req.params.name;
+//   db.User.findOne({userName: name}, function (err, user) {
+//     res.json(user);
+//   });
+// });
+//
+// app.post('/api/user', function api_create_user (req, res) {
+//   var data = req.body;
+//   db.User.create(data, function (err, user) {
+//     res.json(user);
+//   });
+// });
+//
+// app.put('/api/user/:id', function api_edit_user (req, res) {
+//   var id = req.params.id;
+//   var data = req.body;
+//   db.User.findOne({_id: id}, function (err, user) {
+//     if(err) { return console.log("ERROR: ", err);}
+//     user.userName = data.userName;
+//     user.phoneNum = data.phoneNum;
+//     user.location = data.location;
+//     user.remindText = data.remindText;
+//     user.save(function (err, savedUser) {
+//       if(err) { return console.log("ERROR: ", err);}
+//       res.json(savedUser);
+//     });
+//   });
+// });
 
 app.delete('/api/user/:id', function api_delete_user (req, res) {
-  var id = req.params.id;
-  db.User.remove({_id: id}, function (err, user) {
+  var userId = req.user._id;
+  db.User.remove({_id: userId}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     res.json(user);
   });
 });
 
-app.get('/api/:userId/msg', function api_msg (req, res) {
-  var userId = req.params.userId;
+app.get('/api/msg', function api_msg (req, res) {
+  var userId = req.user._id;
   db.User.findOne({_id: userId}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     res.json({msg: user.msg});
   });
 });
 
-app.post('/api/:userId/msg', function api_create_msg (req, res) {
-  var userId = req.params.userId;
+app.post('/api/msg', function api_create_msg (req, res) {
+  var userId = req.user._id;
   var newMsg = req.body;
   db.User.findOne({_id: userId}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
@@ -186,8 +186,8 @@ app.post('/api/:userId/msg', function api_create_msg (req, res) {
   });
 });
 
-app.put('/api/:userId/msg/:msgId', function api_edit_msg (req, res) {
-  var userId = req.params.userId;
+app.put('/api/msg/:msgId', function api_edit_msg (req, res) {
+  var userId = req.user._id;
   var msgId = req.params.msgId;
   var msgData = req.body;
   db.User.findOne({_id: userId}, function (err, user) {
@@ -204,7 +204,7 @@ app.put('/api/:userId/msg/:msgId', function api_edit_msg (req, res) {
   });
 });
 
-app.delete('/api/:userId/msg/:msgId', function api_delete_msg (req, res) {
+app.delete('/api/msg/:msgId', function api_delete_msg (req, res) {
   var userId = req.params.userId;
   var msgId = req.params.msgId;
   db.User.findOne({_id: userId}, function (err, user) {

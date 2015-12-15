@@ -27,6 +27,7 @@
 
       <!-- handlebars template -->
       <script id="msg-template" type="text/x-handlebars-template">
+        {{#if msg}}
         {{#each msg}}
         <div class="row msg" data-msg-id="{{_id}}">
           <div class="col-md-6 col-md-offset-3">
@@ -47,6 +48,7 @@
           </div>
         </div>
         {{/each}}
+        {{/if}}
         <div class="col-md-6 col-md-offset-3 row new-msg">
           <button id="new-msg" class="btn btn-default btn-block">+ New Massage</button>
           <br><a href="/meet" class="btn btn-default">Meet</a>

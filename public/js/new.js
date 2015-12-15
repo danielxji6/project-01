@@ -8,7 +8,7 @@ $(function() {
   $('#msg-form').on('submit', function handleFrom(event) {
     event.preventDefault();
     var newMsg = $('#msg-form').serialize();
-    var url = '/api/' + userId + '/msg';
+    var url = '/api/msg';
     $.post(url, newMsg, function (response) {
       console.log("New Massage Created");
     });

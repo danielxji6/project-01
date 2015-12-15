@@ -5,9 +5,8 @@ $(document).ready(function() {
 
   var source = $("#msg-template").html();
   var template = Handlebars.compile(source);
-  var userId = "566dfec4aa613b470a202b76"; //TODO: get from the authorisation!!!
 
-  $.get('/api/'+userId+'/msg', function (msgs) {
+  $.get('/api/msg', function (msgs) {
     var msgHtml = template(msgs);
     $('#msg-list').html(msgHtml);
   });
@@ -17,7 +16,7 @@ $(document).ready(function() {
   $('#msg-list')
     .on('click', '.delete', function handleDelete(event) {
       var msgId = $(this).parents('.msg').data('msg-id');
-      var url = '/api/' + userId + '/msg/' + msgId;
+      var url = '/api/msg/' + msgId;
       $.ajax({
         method: 'DELETE',
         url: url,
@@ -40,7 +39,7 @@ $(document).ready(function() {
       var msgId = $(this).parents('.msg').data('msg-id');
       var msgDiv = '[data-msg-id="'+ msgId + '"]';
       var $saveBox = $(msgDiv + ' .edit-box');
-      var url = '/api/' + userId + '/msg/' + msgId;
+      var url = '/api/msg/' + msgId;
       $.ajax({
         method: 'PUT',
         url: url,
@@ -56,7 +55,7 @@ $(document).ready(function() {
     .on('click', '.delete-msg', function handleDelete(event) {
       var msgId = $(this).parents('.msg').data('msg-id');
       var msgDiv = '[data-msg-id="'+ msgId + '"]';
-      var url = '/api/' + userId + '/msg/' + msgId;
+      var url = '/api/msg/' + msgId;
       console.log("delete on!");
       $.ajax({
         method: 'DELETE',
