@@ -14,18 +14,6 @@ $(document).ready(function() {
 
 
   $('#msg-list')
-    .on('click', '.delete', function handleDelete(event) {
-      var msgId = $(this).parents('.msg').data('msg-id');
-      var url = '/api/msg/' + msgId;
-      $.ajax({
-        method: 'DELETE',
-        url: url,
-        success: function (response) {
-          $(this).parents('.msg').remove();
-        }
-      });
-    })
-
     .on('click', '.edit', function handleEdit(event) {
       var msgId = $(this).parents('.msg').data('msg-id');
       var msgDiv = '[data-msg-id="'+ msgId + '"]';
@@ -68,7 +56,7 @@ $(document).ready(function() {
     });
 
   $('#msg-list').on('click', '#new-msg', function handleNew(event) {
-    window.location.href = '/new'; //TODO!!!
+    window.location.href = '/new';
   });
 
 

@@ -11,6 +11,7 @@ $(function() {
     var url = '/api/msg';
     $.post(url, newMsg, function (response) {
       console.log("New Massage Created");
+      window.location.href = '/main';
     });
   });
 

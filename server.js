@@ -205,7 +205,7 @@ app.put('/api/msg/:msgId', function api_edit_msg (req, res) {
 });
 
 app.delete('/api/msg/:msgId', function api_delete_msg (req, res) {
-  var userId = req.params.userId;
+  var userId = req.user._id;
   var msgId = req.params.msgId;
   db.User.findOne({_id: userId}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
