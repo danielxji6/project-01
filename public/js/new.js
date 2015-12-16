@@ -6,13 +6,13 @@ $(function() {
   $('#msg-form').on('submit', function handleFrom(event) {
     event.preventDefault();
     var newMsg = $('#msg-form').serialize();
-    $.post('/api/msg', newMsg, function (msg) {
-      console.log(response);
-      if(msg.match) {
-        window.location.href = '/match';
-      } else {
-        window.location.href = '/main';
-      }
+    $.post('/api/msg', newMsg, function (msgs) {
+      console.log(msgs);
+      // if(msgs.exMsg) {
+      //   window.location.href = '/match';
+      // } else {
+      //   window.location.href = '/main';
+      // }
     });
   });
 

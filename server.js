@@ -186,6 +186,7 @@ app.get('/api/msg', function api_msg (req, res) {
 app.post('/api/msg', function api_create_msg (req, res) {
   var userId = req.user._id;
   var newMsg = req.body;
+  var resData = {};
   newMsg.date = new Date();
   newMsg.match = false;
   db.User.findOne({phoneNum: newMsg.toNum}, function (err, user) {
@@ -195,6 +196,7 @@ app.post('/api/msg', function api_create_msg (req, res) {
         if(ele.toNum == req.user.phoneNum) {
           ele.match = true;
           newMsg.match = true;
+          resData.exMsg = ele;
           //TODO: send text to ex function
         }
       });
@@ -205,7 +207,8 @@ app.post('/api/msg', function api_create_msg (req, res) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.push(newMsg);
     user.save(function (err, savedUser) {
-      res.json(user.msg[user.msg.length-1]);
+      resData.newMsg = user.msg[user.msg.length-1];
+      res.json(resData);
     });
   });
 });

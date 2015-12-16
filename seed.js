@@ -65,11 +65,19 @@ userList.forEach(function (ele, index) {
   //     if(err) { return console.log("ERROR: ", err);}
   //   });
   // });
-db.User.remove({}, function (err) {
-  // db.User.create(userList, function (err, users) {
-  //   if(err) { return console.log("ERROR: ", err);}
-  //   console.log("Created", users.length, " users");
-  //   console.log("All user: \n", users);
-  //   process.exit();
-  // });
+// db.User.remove({}, function (err) {
+//   // db.User.create(userList, function (err, users) {
+//   //   if(err) { return console.log("ERROR: ", err);}
+//   //   console.log("Created", users.length, " users");
+//   //   console.log("All user: \n", users);
+//   //   process.exit();
+//   // });
+// });
+
+
+db.User.find({}, function (err, users) {
+  if(err) { return console.log("ERROR: ", err);}
+  console.log("Created", users.length, " users");
+  console.log("All user: \n", users);
+  process.exit();
 });
