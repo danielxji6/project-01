@@ -15,7 +15,6 @@
     <section class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-1">
-
         <form class="form-horizontal" id='user-form'>
           <fieldset>
 
@@ -62,19 +61,12 @@
           </fieldset>
         </form>
       </div>
-      <button id="delete-btn" class="btn btn-danger">Delete this user</button>
+      <div id="delete">
+        <button class="btn btn-danger delete-btn">Delete account</button>
+      </div>
       </div>
     </section>
 
-    <!-- Delete modal popout -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="delete-modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" id="delete-user">No more ex</button>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
     <!-- custom script -->
     <script type="text/javascript" src="js/profile.js"></script>

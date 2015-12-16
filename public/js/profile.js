@@ -15,18 +15,20 @@ $(document).ready(function() {
     });
   });
 
-  $('#delete-btn').on('click', function handlePopout(event) {
-    console.log($('#delete-modal'));
-    $('#delete-modal').modal(show=true);
-  });
+  $('#delete')
+    .on('click', '.delete-btn', function (event) {
+      $(this).addClass("delete-bomb");
+      $(this).text("Are you sure?");
+    })
 
-  $('#delete-user').on('click', function habdleDelete(event) {
-    $.ajax({
-      method: 'DELETE',
-      url: '/api/user',
-      success: function (response) {
-        window.location.href = '/';
-      }
+    .on('click', '.delete-bomb', function (event) {
+      $.ajax({
+        method: 'DELETE',
+        url: '/api/user',
+        success: function (response) {
+          window.location.href = '/';
+        }
+      });
     });
-  });
+
 });

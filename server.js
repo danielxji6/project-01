@@ -32,7 +32,7 @@ hbs.registerPartials(__dirname + '/views/partials');
 // middleware for auth
 app.use(cookieParser());
 app.use(session({
-  secret: 'supersecretkey',
+  secret: 'kpoprock',
   resave: false,
   saveUninitialized: false
 }));
@@ -53,10 +53,16 @@ passport.deserializeUser(db.User.deserializeUser());
  */
 
 app.get('/', function login_page (req, res) {
-  res.render('login');
+  // if user already logged in redirect to main page
+  if (req.user) {
+    res.render('main', { user: req.user });
+  } else {
+    res.render('login');
+  }
 });
 
 app.get('/main', function home_page (req, res) {
+  // if user not logged in redirect back to login page
   if (req.user) {
     res.render('main', { user: req.user });
   } else {
@@ -82,7 +88,6 @@ app.get('/match', function match_page (req, res) {
 
 app.get('/profile', function profile_page (req, res) {
   if (req.user) {
-    // console.log(req.user);
     res.render('profile', req.user);
   } else {
     res.redirect('/');
@@ -182,11 +187,25 @@ app.post('/api/msg', function api_create_msg (req, res) {
   var userId = req.user._id;
   var newMsg = req.body;
   newMsg.date = new Date();
+  newMsg.match = false;
+  db.User.findOne({phoneNum: newMsg.toNum}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    if(user){
+      user.msg.forEach(function (ele, index) {
+        if(ele.toNum == req.user.phoneNum) {
+          ele.match = true;
+          newMsg.match = true;
+          //TODO: send text to ex function
+        }
+      });
+    }
+  });
+  console.log(newMsg);
   db.User.findOne({_id: userId}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.push(newMsg);
     user.save(function (err, savedUser) {
-      res.send('Message created!');
+      res.json(user.msg[user.msg.length-1]);
     });
   });
 });
@@ -225,6 +244,17 @@ app.delete('/api/msg/:msgId', function api_delete_msg (req, res) {
     });
   });
 });
+
+/**********
+ * SERVER *
+ **********/
+
+function function_name(argument) {
+  // body...
+}
+
+
+
 
 
 /**********
