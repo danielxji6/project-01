@@ -8,13 +8,14 @@
       </div>
     </div>
 
-    <div id="msg-list">
+    <div class="col-md-6 well" id="msg-list">
+      <h2>Messages to ex</h2>
       <!-- handlebars template -->
       <script id="msg-template" type="text/x-handlebars-template">
         \{{#if msg}}
         \{{#each msg}}
         <div class="row msg" data-msg-id="\{{_id}}">
-          <div class="col-md-6 col-md-offset-3">
+          <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
               <!-- no panel body -->
               <div class="row">
@@ -24,7 +25,7 @@
                   <p><samll>Date: \{{date}}</samll></p>
                   <p><samll>Match: \{{match}}</samll></p>
                 </div>
-                <div class="col-md-6 col-md-offset-1">
+                <div class="col-md-8 col-md-offset-1">
                   <br><p class="msg-box">\{{msgText}}</p>
                   <button class="btn btn-default btn-sm edit">Edit Message</button>
                 </div>
@@ -39,6 +40,15 @@
           <br><a href="/meet" class="btn btn-default">Meet</a>
         </div>
       </script>
+    </div>
+
+    <div class="col-md-6 well" id="msg-list">
+      <h2>See stories</h2>
+      <div class="row" id="meet-send">
+        <textarea id="meet-textarea" name="meet" placeholder="" class="form-control input-md" rows="5" required=""></textarea>
+
+      </div>
+
     </div>
     <!-- custom script -->
     <script type="text/javascript" src="js/main.js"></script>

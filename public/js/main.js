@@ -8,7 +8,7 @@ $(document).ready(function() {
 
   $.get('/api/msg', function (msgs) {
     var msgHtml = template(msgs);
-    $('#msg-list').html(msgHtml);
+    $('#msg-list').append(msgHtml);
   });
 
 

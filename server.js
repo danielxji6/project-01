@@ -193,20 +193,23 @@ app.post('/api/msg', function api_create_msg (req, res) {
     if(err) { return console.log("ERROR: ", err);}
     if(user){
       user.msg.forEach(function (ele, index) {
-        if(ele.toNum == req.user.phoneNum) {
+        if(ele.toNum == req.user.phoneNum && !ele.match) {
           ele.match = true;
+          user.save(function (err, savedUser) {
+            if(err) { return console.log("ERROR: ", err);}
+            //TODO: send text to ex function
+          });
           newMsg.match = true;
           resData.exMsg = ele;
-          //TODO: send text to ex function
         }
       });
     }
   });
-  console.log(newMsg);
   db.User.findOne({_id: userId}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.push(newMsg);
     user.save(function (err, savedUser) {
+      if(err) { return console.log("ERROR: ", err);}
       resData.newMsg = user.msg[user.msg.length-1];
       res.json(resData);
     });

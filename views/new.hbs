@@ -8,67 +8,84 @@
 
     <!-- From section -->
     <section class="container" id="msg-section">
-     <div class="row">
-     <div class="col-md-6 col-md-offset-1">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
 
-       <form class="form-horizontal" id='msg-form'>
-         <fieldset>
+          <form class="form-horizontal" id='msg-form'>
+            <fieldset>
 
-           <!-- Form Name -->
-           <legend>Add New Message</legend>
+              <!-- Form Name -->
+              <legend>Add New Message</legend>
 
-           <!-- Text input-->
-           <div class="form-group">
-             <label class="col-md-4 control-label" for="toName">His/Her Name</label>
-             <div class="col-md-4">
-             <input id="toName" name="toName" type="text" placeholder="" class="form-control input-md" required="">
-             </div>
-           </div>
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="toName">His/Her Name</label>
+                <div class="col-md-4">
+                  <input id="toName" name="toName" type="text" placeholder="" class="form-control input-md" required="">
+                </div>
+              </div>
 
-           <!-- Text input-->
-           <div class="form-group">
-             <label class="col-md-4 control-label" for="toNum">His/Her Phone</label>
-             <div class="col-md-4">
-             <input id="toNum" name="toNum" type="text" placeholder="(10 digit only)" class="form-control input-md" required="">
-             </div>
-           </div>
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="toNum">His/Her Phone</label>
+                <div class="col-md-4">
+                  <input id="toNum" name="toNum" type="text" placeholder="(10 digit only)" class="form-control input-md" required="">
+                </div>
+              </div>
 
-           <!-- Text input-->
-           <div class="form-group">
-             <label class="col-md-4 control-label" for="msgText">Message</label>
-             <div class="col-md-4">
-             <input id="msgText" name="msgText" type="text" placeholder="" class="form-control input-md" required="">
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="msgText">Message</label>
+                <div class="col-md-8">
+                  <textarea id="msgText" name="msgText" placeholder="" class="form-control input-md" rows="5" required=""></textarea>
+                </div>
+              </div>
 
-             </div>
-           </div>
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="singlebutton"></label>
+                <div class="col-md-4">
+                  <button id="submitMsg" name="singlebutton" class="btn btn-primary">Send Message</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </section>
 
-           <!-- Button -->
-           <div class="form-group">
-             <label class="col-md-4 control-label" for="singlebutton"></label>
-             <div class="col-md-4">
-               <button id="submitMsg" name="singlebutton" class="btn btn-primary">Send Message</button>
-             </div>
-           </div>
-         </fieldset>
-       </form>
-     </div>
-     </div>
-   </section>
+    <section hidden id="match-section" class="container">
+      <script id="msg-template" type="text/x-handlebars-template">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-1">
+            <h4>Ex has something for you too</h4>
+              <div class="row">
+                <div class="panel panel-default">
+                  <span>to \{{toName}} (#\{{toNum}})</sapn><br>
+                  <p><samll>Date: \{{date}}</samll></p>
+                  <p><samll>Match: \{{match}}</samll></p>
+                </div>
+                <div class="col-md-6 col-md-offset-1">
+                  <br><p class="msg-box">\{{msgText}}</p>
+                </div>
+                <a href="/new" class="btn btn-default">Send New Message?</a>
+              </div>
+          </div>
+        </div>
+      </script>
+    </section>
 
-   <section class="container" id="match-section">
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <section hidden id="wait-section" class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-1">
+            <h4>Message is in the bottle....</h4>
+              <div class="row">
+                <a href="/main" class="btn btn-default">Back to main</a>
+              </div>
+          </div>
+        </div>
+      </script>
+    </section>
 
    <!-- custom script -->
    <script type="text/javascript" src="js/new.js"></script>
