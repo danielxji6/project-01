@@ -23,11 +23,11 @@ app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
 
 // Set file open ??
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+//   });
 
 // middleware for auth
 app.use(cookieParser());
@@ -82,7 +82,8 @@ app.get('/match', function match_page (req, res) {
 
 app.get('/profile', function profile_page (req, res) {
   if (req.user) {
-    res.render('profile');
+    // console.log(req.user);
+    res.render('profile', req.user);
   } else {
     res.redirect('/');
   }
@@ -107,10 +108,10 @@ app.post('/signup', function (req, res) {
   if (req.user) {
     res.redirect('/main');
   } else {
-    db.User.register(new db.User({ username: req.body.username }), req.body.password,
+    db.User.register(new db.User({ username: req.body.username, phoneNum: req.body.phoneNum, remindText: true }), req.body.password,
       function (err, newUser) {
         passport.authenticate('local')(req, res, function () {
-          res.redirect('/main');
+          res.send('User Created!');
         });
       }
     );
@@ -119,7 +120,7 @@ app.post('/signup', function (req, res) {
 
 // log in user
 app.post('/login', passport.authenticate('local'), function (req, res) {
-  res.redirect('/main');
+  res.send('User ');
 });
 
 // log out user
@@ -128,14 +129,28 @@ app.get('/logout', function (req, res) {
   res.redirect('/');
 });
 
-// show user profile page
-app.get('/profile_F', function (req, res) {
-  // only show profile if user is logged in
-  if (req.user) {
-    res.render('profile', { user: req.user });
-  } else {
-    res.redirect('/login');
-  }
+app.put('/api/user', function api_delete_user (req, res) {
+  var userId = req.user._id;
+  var data = req.body;
+  console.log(req.user);
+  console.log(data);
+  db.User.findOne({_id: userId}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    user.phoneNum = data.phoneNum;
+    user.location = data.location;
+    user.remindText = (data.remindText === 'on' ? true : false);
+    user.save(function (err, savedUser) {
+      res.send('User saved!');
+    });
+  });
+});
+
+app.delete('/api/user', function api_delete_user (req, res) {
+  var userId = req.user._id;
+  db.User.remove({_id: userId}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    res.json(user);
+  });
 });
 
 /*
@@ -154,43 +169,6 @@ app.get('/api', function api_index (req, res){
   });
 });
 
-// app.get('/api/user/:name', function api_user (req, res) {
-//   var name = req.params.name;
-//   db.User.findOne({userName: name}, function (err, user) {
-//     res.json(user);
-//   });
-// });
-//
-// app.post('/api/user', function api_create_user (req, res) {
-//   var data = req.body;
-//   db.User.create(data, function (err, user) {
-//     res.json(user);
-//   });
-// });
-//
-// app.put('/api/user/:id', function api_edit_user (req, res) {
-//   var id = req.params.id;
-//   var data = req.body;
-//   db.User.findOne({_id: id}, function (err, user) {
-//     if(err) { return console.log("ERROR: ", err);}
-//     user.userName = data.userName;
-//     user.phoneNum = data.phoneNum;
-//     user.location = data.location;
-//     user.remindText = data.remindText;
-//     user.save(function (err, savedUser) {
-//       if(err) { return console.log("ERROR: ", err);}
-//       res.json(savedUser);
-//     });
-//   });
-// });
-
-app.delete('/api/user/:id', function api_delete_user (req, res) {
-  var userId = req.user._id;
-  db.User.remove({_id: userId}, function (err, user) {
-    if(err) { return console.log("ERROR: ", err);}
-    res.json(user);
-  });
-});
 
 app.get('/api/msg', function api_msg (req, res) {
   var userId = req.user._id;
@@ -203,11 +181,12 @@ app.get('/api/msg', function api_msg (req, res) {
 app.post('/api/msg', function api_create_msg (req, res) {
   var userId = req.user._id;
   var newMsg = req.body;
+  newMsg.date = new Date();
   db.User.findOne({_id: userId}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.push(newMsg);
     user.save(function (err, savedUser) {
-      res.redirect('/main');
+      res.send('Message created!');
     });
   });
 });

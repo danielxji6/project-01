@@ -1,0 +1,82 @@
+{{> header}}
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1 id="greet">Profile - {{username}}</h1>
+        <a class="btn btn-default" href="/main">main</a>
+        <a class="btn btn-default" href="/logout">Logout</a>
+      </div>
+    </div>
+
+    <div id="user">
+
+    <!-- <script id="user-template" type="text/x-handlebars-template"> -->
+    <!-- From section -->
+    <section class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+
+        <form class="form-horizontal" id='user-form'>
+          <fieldset>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="username">Username:</label>
+              <div class="col-md-6">
+                <input name="username" type="text" value="{{username}}" class="form-control input-md" disabled>
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="phoneNum">Phone Number:</label>
+              <div class="col-md-6">
+                <input name="phoneNum" type="text" value="{{phoneNum}}" class="form-control input-md" required="">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="location">Location:</label>
+              <div class="col-md-6">
+                <input name="location" type="text" value="{{location}}" class="form-control input-md" required="">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="remindText">Text reminder:</label>
+              <div class="col-md-6">
+                <input name="remindText" type="checkbox" class="form-control" {{#if remindText}}checked{{/if}}>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="singlebutton"></label>
+              <div class="col-md-4">
+                <button name="singlebutton" class="btn btn-primary">Save</button>
+                <span hidden id="saved-text">saved</span>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <button id="delete-btn" class="btn btn-danger">Delete this user</button>
+      </div>
+    </section>
+
+    <!-- Delete modal popout -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delete-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="delete-user">No more ex</button>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- custom script -->
+    <script type="text/javascript" src="js/profile.js"></script>
+  </body>
+</html>

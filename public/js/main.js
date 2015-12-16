@@ -36,7 +36,7 @@ $(document).ready(function() {
           $saveBox.replaceWith('<p class="msg-box" rows="5">'+ response.msgText +'</p>');
         }
       });
-      $(this).text("Edit Massage");
+      $(this).text("Edit Message");
       $(this).addClass("edit").removeClass("edit-save");
     })
 
@@ -55,9 +55,6 @@ $(document).ready(function() {
       });
     });
 
-  $('#msg-list').on('click', '#new-msg', function handleNew(event) {
-    window.location.href = '/new';
-  });
 
 
 

@@ -7,8 +7,8 @@
         <a class="btn btn-default" href="/logout">Logout</a>
       </div>
     </div>
-    <div id="msg-list">
 
+    <div id="msg-list">
       <!-- handlebars template -->
       <script id="msg-template" type="text/x-handlebars-template">
         \{{#if msg}}
@@ -20,12 +20,12 @@
               <div class="row">
                 <div class="container-fluid">
                   <button class="btn btn-clear pull-right delete-msg">X</button>
-                  <span>to \{{toName}} (#\{{toNum}})</sapn><br>
+                  <span>to \{{toName}} (#\{{toNum}}) Date: {{date}}</sapn><br>
                   <span><samll>\{{date}}</samll></span>
                 </div>
                 <div class="col-md-6 col-md-offset-1">
                   <br><p class="msg-box">\{{msgText}}</p>
-                  <button class="btn btn-default btn-sm edit">Edit Massage</button>
+                  <button class="btn btn-default btn-sm edit">Edit Message</button>
                 </div>
               </div>
             </div>
@@ -34,7 +34,7 @@
         \{{/each}}
         \{{/if}}
         <div class="col-md-6 col-md-offset-3 row new-msg">
-          <button id="new-msg" class="btn btn-default btn-block">+ New Massage</button>
+          <a href="/new" id="new-msg" class="btn btn-default btn-block">+ New Message</a>
           <br><a href="/meet" class="btn btn-default">Meet</a>
         </div>
       </script>
