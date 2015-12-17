@@ -5,7 +5,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     hbs = require('hbs'),
-    textbelt = require('textbelt'),
+    request = require('request'),
     session = require('express-session'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
@@ -185,7 +185,6 @@ app.get('/api/msg', function api_msg (req, res) {
 
 app.post('/api/msg', function api_create_msg (req, res) {
   var userId = req.user._id;
-  var userNum = req.user.phoneNum;
   var newMsg = req.body;
   var resData = {};
   newMsg.date = new Date();
@@ -194,11 +193,11 @@ app.post('/api/msg', function api_create_msg (req, res) {
     if(err) { return console.log("ERROR: ", err);}
     if(user){
       user.msg.forEach(function (ele, index) {
-        if(ele.toNum == userNum && !ele.match) {
+        if(ele.toNum == req.user.phoneNum && !ele.match) {
           ele.match = true;
           user.save(function (err, savedUser) {
             if(err) { return console.log("ERROR: ", err);}
-            sendTextMsg(userNum, user.phoneNum, ele.msgText);
+            //TODO: send text to ex function
           });
           newMsg.match = true;
           resData.exMsg = ele;
@@ -319,20 +318,14 @@ app.delete('/api/meet/:id', function api_get_meet(req, res) {
 /**********
  * Function *
  **********/
-// Textbelt func
-var opts = {
-  fromAddr: 'ex.talk@email.com',  // "from" address in received text
-  fromName: 'ex.talk',            // "from" name in received text
-  region:   'us',                 // region the receiving number is in: 'us', 'canada', 'intl'
-  subject:  'Subject!'            // subject of the message
-};
-function sendTextMsg(fromNum, toNum, message) {
-  opts.fromAddr = '#' + fromNum;
-  textbelt.sendText(toNum, message, opts, function (err) {
-    if(err) { return console.log("ERROR: ", err);}
-  });
+
+function function_name(argument) {
+  // body...
 }
-// textbelt.sendText(6699003292, "this work!", opts);
+
+
+
+
 
 /**********
  * SERVER *
