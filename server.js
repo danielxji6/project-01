@@ -5,6 +5,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     hbs = require('hbs'),
+    sendmail = require('sendmail')(),
+    text = require('textbelt'),
     request = require('request'),
     session = require('express-session'),
     passport = require('passport'),
@@ -197,7 +199,7 @@ app.post('/api/msg', function api_create_msg (req, res) {
           ele.match = true;
           user.save(function (err, savedUser) {
             if(err) { return console.log("ERROR: ", err);}
-            //TODO: send text to ex function
+            sendTextMsg(userNum, user.phoneNum, ele.msgText);
           });
           newMsg.match = true;
           resData.exMsg = ele;
@@ -319,10 +321,21 @@ app.delete('/api/meet/:id', function api_get_meet(req, res) {
  * Function *
  **********/
 
-function function_name(argument) {
-  // body...
-}
-
+ // Textbelt func
+ var opts = {
+   fromAddr: 'ex.talk@email.com',  // "from" address in received text
+   fromName: 'ex.talk',            // "from" name in received text
+   region:   'us',                 // region the receiving number is in: 'us', 'canada', 'intl'
+   subject:  'Subject!'            // subject of the message
+ };
+ function sendTextMsg(fromNum, toNum, message) {
+   opts.fromAddr = '#' + fromNum;
+   text.sendText(toNum, message, opts, function (err) {
+     if(err) { return console.log("ERROR: ", err);}
+   });
+ }
+ // text.debug("Textbelt debug on!");
+ sendTextMsg(1234567890, 6699003292, "Textbelt is on!");
 
 
 
