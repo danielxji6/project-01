@@ -3,11 +3,13 @@
 $(document).ready(function() {
   console.log('main.js loaded!');
 
-  var source = $("#msg-template").html();
-  var template = Handlebars.compile(source);
+  var sourceMsg = $("#msg-template").html();
+  var templateMsg = Handlebars.compile(sourceMsg);
+  var sourceMeet = $("#meet-template").html();
+  var templateMeet = Handlebars.compile(sourceMeet);
 
   $.get('/api/msg', function (msgs) {
-    var msgHtml = template(msgs);
+    var msgHtml = templateMsg(msgs);
     $('#msg-list').append(msgHtml);
   });
 
@@ -56,6 +58,36 @@ $(document).ready(function() {
     });
 
 
+  $.get('/api/meet', function (meets) {
+    var meetHtml = templateMeet(meets);
+    $('#meet-list').append(meetHtml);
+  });
+
+
+  $('#save-meet').on('click', function handleMeet(event) {
+    var meetData = {postText: $('meet-textarea').val()};
+    $.post('/api/meet', meetData, function (response) {
+      console.log(response); //TODO
+    });
+  });
+
+  $('#meet-list').on('click', '.comment', function handleEdit(event) {
+      var meetId = $(this).parents('.meet').data('meet-id');
+      var meetDiv = '[data-meet-id="'+ meetId + '"]';
+      var meetData = $(meetDiv + ' .comment-input').val();
+      var url = '/api/meet/' + meetId;
+      // console.log(meetId);
+      $.ajax({
+        method: 'PUT',
+        url: url,
+        data: meetData,
+        success: function (response) {
+          $(meetDiv + ' .meet-comment-box').append('<p>' + meetData.postText + '</p>');
+          $(this).val("");
+        }
+      });
+
+    });
 
 
 });

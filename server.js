@@ -125,7 +125,7 @@ app.post('/signup', function (req, res) {
 
 // log in user
 app.post('/login', passport.authenticate('local'), function (req, res) {
-  res.send('User ');
+  res.send('Logged in');
 });
 
 // log out user
@@ -251,8 +251,53 @@ app.delete('/api/msg/:msgId', function api_delete_msg (req, res) {
   });
 });
 
+app.get('/api/meet', function api_get_meet(req, res) {
+  db.Meet.find({}, function (err, meets) {
+    if(err) { return console.log("ERROR: ", err);}
+    res.json({meets: meets});
+  });
+});
+
+app.post('/api/meet', function api_get_meet(req, res) {
+  var userId = req.user._id;
+  var meetData = req.body;
+  db.User.findOne({_id: userId}, function (err, user) {
+    if(err) { return console.log("ERROR: ", err);}
+    meetData.date = new Date();
+    meetData._user = user._id;
+    meetData.comments = [];
+    db.Meet.create(meetData, function (err, meet) {
+      if(err) { return console.log("ERROR: ", err);}
+      user._meet = meet._id;
+      user.save(function (err, user) {
+        if(err) { return console.log("ERROR: ", err);}
+        console.log(user);
+        res.json(meet);
+      });
+    });
+  });
+});
+
+app.get('/api/meet/:id', function api_get_meet(req, res) {
+
+});
+
+app.put('/api/meet/:id', function api_get_meet(req, res) {
+  var id = req.query.id;
+  db.Meet.findOne({_id: id}, function (err, meet) {
+    console.log(meet);
+    meet.comments.push(req.body);
+    res.json(meet);
+  });
+});
+
+app.delete('/api/meet/:id', function api_get_meet(req, res) {
+
+});
+
+
 /**********
- * SERVER *
+ * Function *
  **********/
 
 function function_name(argument) {

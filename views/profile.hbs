@@ -30,7 +30,7 @@
             <div class="form-group">
               <label class="col-md-4 control-label" for="phoneNum">Phone Number:</label>
               <div class="col-md-6">
-                <input name="phoneNum" type="text" value="{{phoneNum}}" class="form-control input-md" required="">
+                <input name="phoneNum" type="text" pattern="^\d{10}$" value="{{phoneNum}}" class="form-control input-md" required="">
               </div>
             </div>
 

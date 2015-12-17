@@ -1,4 +1,4 @@
-// get all user list
+// delete all user list
 
 var db = require('./models');
 

@@ -10,7 +10,7 @@ var UserSchema = new Schema({
   phoneNum: Number,
   location: String,
   msg: [Msg.schema],
-  meet: Meet.schema,
+  _meet: { type: Schema.Types.ObjectId, ref: 'Meet' },
   remindText: Boolean
 });
 

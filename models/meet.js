@@ -1,7 +1,9 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    User = require('./user');
 
 var MeetSchema = new Schema({
+  _user: { type: Schema.Types.ObjectId, ref: 'User' },
   date: Date,
   postText: String,
   comments: [String]

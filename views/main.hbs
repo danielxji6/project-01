@@ -42,12 +42,43 @@
       </script>
     </div>
 
-    <div class="col-md-6 well" id="msg-list">
+    <div class="col-md-6 well" id="meet-list">
       <h2>See stories</h2>
       <div class="row" id="meet-send">
-        <textarea id="meet-textarea" name="meet" placeholder="" class="form-control input-md" rows="5" required=""></textarea>
-
+        <textarea id="meet-textarea" name="meet" placeholder="{{_meet}}" class="form-control input-md" rows="5" required=""></textarea>
+        <button id="save-meet" class="btn btn-default">Save Story</button>
       </div>
+      <!-- handlebars template -->
+      <script id="meet-template" type="text/x-handlebars-template">
+        \{{#if meets}}
+        \{{#each meets}}
+        <div class="row meet" data-meet-id="\{{_id}}">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+              <!-- no panel body -->
+              <div class="row">
+                <div class="container-fluid">
+                  <h4>Story #</h4>
+                  <p>\{{postText}}</p>
+                  <p>\{{date}}</p><br>
+                  <h4>Comments:</h4>
+                  <div class="col-md-8 col-md-offset-1 meet-comment-box">
+                    \{{#each comments}}
+                      <p>\{{this}}</p>
+                    \{{/each}}
+                  </div>
+                  <div class="col-md-8 col-md-offset-1">
+                    <input class="comment-input form-control input-md" type="text" placeholder="" required="">
+                    <button class="btn btn-default btn-sm comment">Comment</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        \{{/each}}
+        \{{/if}}
+      </script>
 
     </div>
     <!-- custom script -->
