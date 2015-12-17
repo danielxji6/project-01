@@ -177,7 +177,7 @@ app.get('/api', function api_index (req, res){
 
 app.get('/api/msg', function api_msg (req, res) {
   var userId = req.user._id;
-  db.User.findOne({_id: userId}, function (err, user) {
+  db.User.findById(userId, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     res.json({msg: user.msg});
   });
@@ -205,7 +205,7 @@ app.post('/api/msg', function api_create_msg (req, res) {
       });
     }
   });
-  db.User.findOne({_id: userId}, function (err, user) {
+  db.User.findById(userId, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.push(newMsg);
     user.save(function (err, savedUser) {
@@ -220,7 +220,7 @@ app.put('/api/msg/:msgId', function api_edit_msg (req, res) {
   var userId = req.user._id;
   var msgId = req.params.msgId;
   var msgData = req.body;
-  db.User.findOne({_id: userId}, function (err, user) {
+  db.User.findById(userId, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.forEach(function (ele, index) {
       if(ele._id == msgId) {
@@ -237,7 +237,7 @@ app.put('/api/msg/:msgId', function api_edit_msg (req, res) {
 app.delete('/api/msg/:msgId', function api_delete_msg (req, res) {
   var userId = req.user._id;
   var msgId = req.params.msgId;
-  db.User.findOne({_id: userId}, function (err, user) {
+  db.User.findById(userId, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     user.msg.forEach(function (ele, index) {
       if(ele._id == msgId) {
@@ -261,7 +261,7 @@ app.get('/api/meet', function api_get_meet(req, res) {
 app.post('/api/meet', function api_get_meet(req, res) {
   var userId = req.user._id;
   var meetData = req.body;
-  db.User.findOne({_id: userId}, function (err, user) {
+  db.User.findById(userId, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     meetData.date = new Date();
     meetData._user = user._id;
@@ -271,7 +271,6 @@ app.post('/api/meet', function api_get_meet(req, res) {
       user._meet = meet._id;
       user.save(function (err, user) {
         if(err) { return console.log("ERROR: ", err);}
-        console.log(user);
         res.json(meet);
       });
     });
@@ -279,20 +278,40 @@ app.post('/api/meet', function api_get_meet(req, res) {
 });
 
 app.get('/api/meet/:id', function api_get_meet(req, res) {
-
-});
-
-app.put('/api/meet/:id', function api_get_meet(req, res) {
-  var id = req.query.id;
-  db.Meet.findOne({_id: id}, function (err, meet) {
-    console.log(meet);
-    meet.comments.push(req.body);
+  var id = req.params.id;
+  db.Meet.findById(id, function (err, meet) {
     res.json(meet);
   });
 });
 
-app.delete('/api/meet/:id', function api_get_meet(req, res) {
+app.put('/api/meet/:id', function api_get_meet(req, res) {
+  var id = req.params.id;
+  var data = req.body;
+  db.Meet.findById(id, function (err, meet) {
+    if(err) { return console.log("ERROR: ", err);}
+    if (data.postText) meet.postText = data.postText;
+    if (data.comment) meet.comments.push(data.comment);
+    meet.save(function (err) {
+      if(err) { return console.log("ERROR: ", err);}
+      res.json(meet);
+    });
+  });
+});
 
+app.delete('/api/meet/:id', function api_get_meet(req, res) {
+  var userId = req.user._id;
+  var id = req.params.id;
+  db.Meet.remove({_id: id}, function (err, meet) {
+    if(err) { return console.log("ERROR: ", err);}
+    db.User.findById(userId, function (err, user) {
+      if(err) { return console.log("ERROR: ", err);}
+      user._meet = undefined;
+      user.save(function (err) {
+        if(err) { return console.log("ERROR: ", err);}
+        res.json(user);
+      });
+    });
+  });
 });
 
 

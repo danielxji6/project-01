@@ -7,33 +7,32 @@
     </div>
   </div>
   <!-- Sign up form -->
-  <section class="container">
-   <div class="row">
+   <div class="col-md-6 row">
    <div class="col-md-10 col-md-offset-1">
      <form class="form-horizontal"  id='signup-form'>
        <fieldset>
          <h2>Sign Up</h2><hr>
          <!-- Username input-->
          <div class="form-group">
-           <div class="col-md-4">
+           <div class="col-md-8">
            <input type="text" name="username" class="form-control input-md" placeholder="User Name" autocomplete="off" required="">
            </div>
          </div>
          <!-- Phone Number input-->
          <div class="form-group">
-           <div class="col-md-4">
+           <div class="col-md-8">
            <input type="text" name="phoneNum" pattern="^\d{10}$" class="form-control input-md" placeholder="Phone Number (10 digit only)" autocomplete="off" required="">
            </div>
          </div>
          <!-- Password input -->
          <div class="form-group">
-           <div class="col-md-4">
+           <div class="col-md-8">
            <input type="password" name="password" class="form-control input-md" placeholder="Password" autocomplete="off" required="">
            </div>
          </div>
          <!-- Button -->
          <div class="form-group">
-           <div class="col-md-4">
+           <div class="col-md-8">
              <button id="signUp" name="singlebutton" class="btn btn-default">Sign Up</button>
            </div>
          </div>
@@ -41,31 +40,29 @@
      </form>
    </div>
    </div>
-  </section>
 
   <!-- Log in form -->
-  <section class="container">
-  <div class="row">
+  <div class="col-md-6 row">
   <div class="col-md-10 col-md-offset-1">
     <form class="form-horizontal"  id='login-form'>
       <fieldset>
         <h2>Log In</h2><hr>
         <!-- Username input-->
         <div class="form-group">
-          <div class="col-md-4">
+          <div class="col-md-8">
           <input type="text" name="username" class="form-control input-md" placeholder="Username" autocomplete="off" required="">
           </div>
         </div>
         <!-- Password input -->
         <div class="form-group">
-          <div class="col-md-4">
+          <div class="col-md-8">
           <input type="password" name="password" class="form-control input-md" placeholder="Password" autocomplete="off" required="">
           <p hidden id="wrongUser" style="color: red">* please check username or password</p>
           </div>
         </div>
         <!-- Button -->
         <div class="form-group">
-          <div class="col-md-4">
+          <div class="col-md-8">
             <button id="logIn" name="singlebutton" class="btn btn-default">Log In</button>
           </div>
         </div>
@@ -73,7 +70,6 @@
     </form>
   </div>
   </div>
-  </section>
   <!-- custom script -->
   <script type="text/javascript" src="js/login.js"></script>
 </body>

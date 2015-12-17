@@ -43,11 +43,24 @@
     </div>
 
     <div class="col-md-6 well" id="meet-list">
-      <h2>See stories</h2>
-      <div class="row" id="meet-send">
-        <textarea id="meet-textarea" name="meet" placeholder="{{_meet}}" class="form-control input-md" rows="5" required=""></textarea>
-        <button id="save-meet" class="btn btn-default">Save Story</button>
+      <h2>See stories</h2><hr>
+      <div class="row" id="meet-user">
+      {{#if user._meet}}
+        <h4>Your Story</h4>
+        <div id="meet-text" data-meet-id="{{user._meet}}">
+          <button class="btn btn-default edit-meet">Edit Story</button>
+          <button class="btn btn-default delete-meet">Delete Story</button>
+        </div>
+      {{/if}}
       </div>
+      <div class="row" id="meet-send">
+      {{#if user._meet}}
+      {{else}}
+        <h4>Tell your story?</h4>
+        <textarea id="meet-textarea" name="meet" placeholder="" class="form-control input-md" rows="5" required=""></textarea>
+        <button id="save-meet" class="btn btn-default">Save Story</button>
+      {{/if}}
+      </div><hr>
       <!-- handlebars template -->
       <script id="meet-template" type="text/x-handlebars-template">
         \{{#if meets}}
@@ -58,7 +71,7 @@
               <!-- no panel body -->
               <div class="row">
                 <div class="container-fluid">
-                  <h4>Story #</h4>
+                  <h4>Story #\{{@index}}</h4>
                   <p>\{{postText}}</p>
                   <p>\{{date}}</p><br>
                   <h4>Comments:</h4>
