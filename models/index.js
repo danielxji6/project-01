@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/extalk');
+mongoose.connect( process.env.MONGOLAB_URI ||
+                  process.env.MONGOHQ_URL ||
+                  'mongodb://localhost/extalk');
 
 var User = require('./user');
 var Msg = require('./msg');
