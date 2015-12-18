@@ -197,12 +197,12 @@ app.post('/api/msg', function api_create_msg (req, res) {
       user.msg.forEach(function (ele, index) {
         if(ele.toNum == req.user.phoneNum && !ele.match) {
           ele.match = true;
-          user.save(function (err, savedUser) {
-            if(err) { return console.log("ERROR: ", err);}
-            sendTextMsg(userNum, user.phoneNum, ele.msgText);
-          });
           newMsg.match = true;
           resData.exMsg = ele;
+          sendTextMsg(req.user.phoneNum, user.phoneNum, ele.msgText);
+          user.save(function (err, savedUser) {
+            if(err) { return console.log("ERROR: ", err);}
+          });
         }
       });
     }
@@ -322,22 +322,32 @@ app.delete('/api/meet/:id', function api_get_meet(req, res) {
  **********/
 
  // Textbelt func
- var opts = {
-   fromAddr: 'ex.talk@email.com',  // "from" address in received text
-   fromName: 'ex.talk',            // "from" name in received text
-   region:   'us',                 // region the receiving number is in: 'us', 'canada', 'intl'
-   subject:  'Subject!'            // subject of the message
- };
- function sendTextMsg(fromNum, toNum, message) {
-   opts.fromAddr = '#' + fromNum;
-   text.sendText(toNum, message, opts, function (err) {
-     if(err) { return console.log("ERROR: ", err);}
-   });
- }
+ // var opts = {
+ //   fromAddr: 'ex.talk@email.com',  // "from" address in received text
+ //   fromName: 'ex.talk',            // "from" name in received text
+ //   region:   'us',                 // region the receiving number is in: 'us', 'canada', 'intl'
+ //   subject:  'Subject!'            // subject of the message
+ // };
+ // function sendTextMsg(fromNum, toNum, message) {
+ //   opts.fromAddr = '#' + fromNum;
+ //   text.sendText(toNum, message, opts, function (err) {
+ //     if(err) { return console.log("ERROR: ", err);}
+ //   });
+ // }
  // text.debug("Textbelt debug on!");
- sendTextMsg(1234567890, 6699003292, "Textbelt is on!");
+ // sendTextMsg(1234567890, 6699003292, "Textbelt is on!");
 
-
+function sendTextMsg(fromNum, toNum, message) {
+  var data = {
+    number: toNum,
+    message: ""
+  };
+  data.message = "\nex.talk\nFrom: " + fromNum + "\n" + message;
+  request.post({url:'http://textbelt.com/text', form: data}, function optionalCallback(err, httpResponse, body) {
+    if (err) { return console.error('ERROR by request:', err);}
+    console.log('Text send! ', body);
+  });
+}
 
 
 /**********
