@@ -2,19 +2,21 @@
 
 ## What is ex.talk?
 
-This is a website for people missing their ex and but don't want to bother them unless they feel the same. If your ex also send you a message you will get a text message. Hope you find ture love.
+This is a website for people missing their exes but don't want to bother them unless they feel the same. If your ex also send you a message you will get a text message. Through this website, you will be able to reconnect with your exes and fall back in love with them again.
 
 ## Use and Instruction
 
-* Sign up if you are first time here, and use you phone number so you can get the notification from the app.
-* Send a message to yuor ex and leave his/her phone number.
-* Wait until he/she reply so your ex will see your message and you will get the text message on your phone.
-* You can see other's stories on meet page and you cna post your own and leave comment on other stories.
-* Edit your profile to change your number but i your ex only know your old number please don't change it.
+* Sign up if you are first time user, and use you phone number so you can get the notification from the web application.
+* Send a message to your ex and leave his/her phone number.
+* If the recipient had also signed up for this app and that he/she had also sent a message to you
+* He/she will see your message and you will also get a text message on your phone via text.
+* In order to continue to communicate, both sender and recipient must send the second message to each other as well
+* You can see others' stories on meet page and you can post your own and leave comment on other stories.
+* Edit your profile to change your number; but if your ex only know your old number, please don't change it.
 
 ## Technologies
 
-ex.talk is a full stack web application using Node.js, Mongoose, Express, handlebars, passport,  html, css, JQuery, .
+ex.talk is a full stack web application using Node.js, Mongoose, Express, handlebars, passport,  html, css, JQuery.
 
 ## Goals Done
 
@@ -41,3 +43,5 @@ request])
 ## Heroku Link
 
 https://still-cliffs-5842.herokuapp.com
+
+## 

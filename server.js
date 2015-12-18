@@ -199,7 +199,7 @@ app.post('/api/msg', function api_create_msg (req, res) {
           ele.match = true;
           newMsg.match = true;
           resData.exMsg = ele;
-          sendTextMsg(req.user.phoneNum, user.phoneNum, ele.msgText);
+          sendTextMsg(req.user.phoneNum, user.phoneNum, newMsg.msgText);
           user.save(function (err, savedUser) {
             if(err) { return console.log("ERROR: ", err);}
           });
