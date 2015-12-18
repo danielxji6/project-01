@@ -54,19 +54,20 @@
       </div>
     </section>
 
+    <!-- If there's a match this will show the message from ex -->
     <section hidden id="match-section" class="container">
       <script id="msg-template" type="text/x-handlebars-template">
         <div class="row">
           <div class="col-md-6 col-md-offset-1">
-            <h4>Ex has something for you too</h4>
+            <h4>Ex has something for you too..</h4><br>
               <div class="row">
                 <div class="panel panel-default">
                   <span>to \{{toName}} (#\{{toNum}})</sapn><br>
                   <p><samll>Date: \{{date}}</samll></p>
                   <p><samll>Match: \{{match}}</samll></p>
-                </div>
-                <div class="col-md-6 col-md-offset-1 row">
-                  <br><p class="msg-box">\{{msgText}}</p>
+                  <div class="col-md-6 col-md-offset-1 row">
+                    <br><p class="msg-box">\{{msgText}}</p>
+                  </div>
                 </div>
                 <a href="/new" class="btn btn-default">Send New Message?</a>
               </div>
@@ -75,6 +76,7 @@
       </script>
     </section>
 
+    <!-- Show this when no match -->
     <section hidden id="wait-section" class="container">
         <div class="row">
           <div class="col-md-6 col-md-offset-1">

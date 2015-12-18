@@ -24,7 +24,7 @@ app.use(express.static(__dirname + '/vendor'));
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
 
-// Set file open ??
+// Set file open
 // app.use(function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
 //     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -108,7 +108,7 @@ app.get('/meet', function meet_page (req, res) {
  * Auth Endpoints
  */
 
-// sign up new user, then log them in
+// Sign up new user, then log them in
 // hashes and salts password, saves new user to db
 app.post('/signup', function (req, res) {
   // if user is logged in, don't let them sign up again
@@ -136,6 +136,7 @@ app.get('/logout', function (req, res) {
   res.redirect('/');
 });
 
+// Update user profile
 app.put('/api/user', function api_delete_user (req, res) {
   var userId = req.user._id;
   var data = req.body;
@@ -152,6 +153,7 @@ app.put('/api/user', function api_delete_user (req, res) {
   });
 });
 
+// Delete user
 app.delete('/api/user', function api_delete_user (req, res) {
   var userId = req.user._id;
   db.User.remove({_id: userId}, function (err, user) {
@@ -171,7 +173,15 @@ app.get('/api', function api_index (req, res){
     documentation_url: "https://github.com/phnxdaniel/project-01",
     base_url: "",
     endpoints: [
-      {method: "GET", path: "/api", description: "Describes available endpoints"}
+      {method: "GET", path: "/api/msg", description: "Get user messages"},
+      {method: "POST", path: "/api/msg", description: "Add new message"},
+      {method: "PUT", path: "/api/msg/:msgId", description: "Update message"},
+      {method: "DELETE", path: "/api/msg/:msgId", description: "Delete message"},
+      {method: "GET", path: "/api/meet", description: "Get all meets"},
+      {method: "POST", path: "/api/meet", description: "Add new meet"},
+      {method: "GET", path: "/api/meet/:meetId", description: "Get one meet"},
+      {method: "PUT", path: "/api/meet/:meetId", description: "Update meet"},
+      {method: "DELETE", path: "/api/meet/:meetId", description: "Delete meet"}
     ]
   });
 });
@@ -191,15 +201,17 @@ app.post('/api/msg', function api_create_msg (req, res) {
   var resData = {};
   newMsg.date = new Date();
   newMsg.match = false;
+  // Find if there's a match message
   db.User.findOne({phoneNum: newMsg.toNum}, function (err, user) {
     if(err) { return console.log("ERROR: ", err);}
     if(user){
       user.msg.forEach(function (ele, index) {
+        // Check the number and if match before
         if(ele.toNum == req.user.phoneNum && !ele.match) {
           ele.match = true;
           newMsg.match = true;
           resData.exMsg = ele;
-          sendTextMsg(req.user.phoneNum, user.phoneNum, newMsg.msgText);
+          sendTextMsg(req.user.phoneNum, newMsg.toNum, newMsg.msgText);
           user.save(function (err, savedUser) {
             if(err) { return console.log("ERROR: ", err);}
           });
@@ -268,6 +280,7 @@ app.post('/api/meet', function api_get_meet(req, res) {
     meetData.date = new Date();
     meetData._user = user._id;
     meetData.comments = [];
+    // Create new meet and give user referance
     db.Meet.create(meetData, function (err, meet) {
       if(err) { return console.log("ERROR: ", err);}
       user._meet = meet._id;
@@ -290,6 +303,7 @@ app.put('/api/meet/:id', function api_get_meet(req, res) {
   var id = req.params.id;
   var data = req.body;
   db.Meet.findById(id, function (err, meet) {
+    // Update the postText and comments
     if(err) { return console.log("ERROR: ", err);}
     if (data.postText) meet.postText = data.postText;
     if (data.comment) meet.comments.push(data.comment);
@@ -305,6 +319,7 @@ app.delete('/api/meet/:id', function api_get_meet(req, res) {
   var id = req.params.id;
   db.Meet.remove({_id: id}, function (err, meet) {
     if(err) { return console.log("ERROR: ", err);}
+    // Also remove user meet referance
     db.User.findById(userId, function (err, user) {
       if(err) { return console.log("ERROR: ", err);}
       user._meet = undefined;
@@ -321,7 +336,7 @@ app.delete('/api/meet/:id', function api_get_meet(req, res) {
  * Function *
  **********/
 
- // Textbelt func
+ // Textbelt package func
  // var opts = {
  //   fromAddr: 'ex.talk@email.com',  // "from" address in received text
  //   fromName: 'ex.talk',            // "from" name in received text
@@ -343,6 +358,7 @@ function sendTextMsg(fromNum, toNum, message) {
     message: ""
   };
   data.message = "\nex.talk\nFrom: " + fromNum + "\n" + message;
+  // Using textbelt api to send message
   request.post({url:'http://textbelt.com/text', form: data}, function optionalCallback(err, httpResponse, body) {
     if (err) { return console.error('ERROR by request:', err);}
     console.log('Text send! ', body);
