@@ -20,13 +20,23 @@ $(document).ready(function() {
     $('#meet-list').append(meetHtml);
   });
 
+  $('#page-main').on('click', function handlePage(event) {
+    $('#msg-list').show();
+    $('#meet-list').hide();
+  });
+
+  $('#page-meet').on('click', function handlePage(event) {
+    $('#msg-list').hide();
+    $('#meet-list').show();
+  });
+
   // Messages functions: Edit, Delete
   $('#msg-list')
   .on('click', '.edit', function handleEdit(event) {
     var msgId = $(this).parents('.msg').data('msg-id');
     var msgDiv = '[data-msg-id="'+ msgId + '"]';
     var $msgBox = $(msgDiv + ' .msg-box');
-    $msgBox.replaceWith('<textarea class="edit-box" rows="4">'+ $msgBox.text() +'</textarea>');
+    $msgBox.replaceWith('<textarea class="edit-box" rows="4">'+ $msgBox.text() +'</textarea><br>');
     $(this).text("Save Edit");
     $(this).addClass("edit-save").removeClass("edit");
   })
@@ -93,7 +103,7 @@ $(document).ready(function() {
   $('#meet-user')
   .on('click', '.edit-meet', function handleEdit(event) {
     var $meetBox = $('#meet-user .meet-box');
-    $meetBox.replaceWith('<textarea class="edit-box" rows="4">'+ $meetBox.text() +'</textarea>');
+    $meetBox.replaceWith('<textarea class="edit-box" rows="4">'+ $meetBox.text() +'</textarea><br>');
     $(this).text("Save Edit");
     $(this).addClass("edit-save").removeClass("edit-meet");
   })

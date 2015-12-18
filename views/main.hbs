@@ -1,6 +1,6 @@
 {{> header}}
 
-    <div class="jumbotron">
+    <div id="d_jum" class="jumbotron">
       <div class="container">
         <h1 id="greet">Hi, {{user.username}}</h1>
         <a class="btn btn-default" href="/profile">Profile</a>
@@ -8,21 +8,32 @@
       </div>
     </div>
 
-    <div class="col-md-6 well" id="msg-list">
-      <h2>Messages to ex</h2>
+    <div class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <p class="navbar-brand" href="#">ex.talk</p>
+          <ul class="nav navbar-nav">
+            <li><a id="page-main" href="#main">Home</a></li>
+            <li><a id="page-meet" href="#meet">Meet</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12" id="msg-list">
+      <h2 class="sub_h">Messages to ex</h2>
       <!-- handlebars template -->
       <script id="msg-template" type="text/x-handlebars-template">
         \{{#if msg}}
         \{{#each msg}}
         <div class="row msg" data-msg-id="\{{_id}}">
-          <div class="col-md-10 col-md-offset-1">
+          <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
               <!-- no panel body -->
-              <div class="row">
+              <div class="col-md-12 row">
                 <div class="container-fluid">
-                  <button class="btn btn-clear pull-right delete-msg">X</button>
-                  <span>to \{{toName}} (#\{{toNum}})</sapn><br>
-                  <p><samll>Date: \{{date}}</samll></p>
+                  <button class="btn btn-default pull-right delete-msg">X</button>
+                  <h4>to \{{toName}} (#\{{toNum}}) <small> \{{date}}</small></h4><br>
                   <p><samll>Match: \{{match}}</samll></p>
                 </div>
                 <div class="col-md-8 col-md-offset-1">
@@ -35,16 +46,15 @@
         </div>
         \{{/each}}
         \{{/if}}
-        <div class="col-md-6 col-md-offset-3 row new-msg">
-          <a href="/new" id="new-msg" class="btn btn-default btn-block">+ New Message</a>
-          <br><a href="/meet" class="btn btn-default">Meet</a>
+        <hr><div class="col-md-6 col-md-offset-3 row new-msg">
+          <a href="/new" id="new-msg" class="btn btn-default btn-block">+ New Message</a><br><br>
         </div>
       </script>
     </div>
 
-    <div class="col-md-6 well" id="meet-list">
-      <h2>See stories</h2><hr>
-      <div class="row" id="meet-user">
+    <div hidden class="col-md-12" id="meet-list">
+      <h2 class="sub_h">See stories</h2><hr>
+      <div class="col-md-12 row" id="meet-user">
       {{#if user._meet}}
         <h4>Your Story</h4>
         <div id="meet-text" data-meet-id="{{user._meet}}">
@@ -52,43 +62,43 @@
           <button class="btn btn-default delete-meet">Delete Story</button>
         </div>
       {{/if}}
-      </div>
-      <div class="row" id="meet-send">
+      </div><hr><br>
+      <div class="col-md-12 row" id="meet-send">
       {{#if user._meet}}
       {{else}}
         <h4>Tell your story?</h4>
-        <textarea id="meet-textarea" name="meet" placeholder="" class="form-control input-md" rows="5" required=""></textarea>
+        <textarea id="meet-textarea" name="meet" placeholder="" class="form-control input-md" rows="3" required=""></textarea>
         <button id="save-meet" class="btn btn-default">Save Story</button>
       {{/if}}
-      </div><hr>
+      </div>
+      <div class="col-md-12 row"><br></div>
       <!-- handlebars template -->
       <script id="meet-template" type="text/x-handlebars-template">
         \{{#if meets}}
         \{{#each meets}}
         <div class="row meet" data-meet-id="\{{_id}}">
-          <div class="col-md-10 col-md-offset-1">
+          <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
               <!-- no panel body -->
-              <div class="row">
+              <div class="col-md-10 row">
                 <div class="container-fluid">
-                  <h4>Story #\{{@index}}</h4>
-                  <p>\{{postText}}</p>
-                  <p>\{{date}}</p><br>
-                  <h4>Comments:</h4>
+                  <h4>Story #\{{@index}} <small>  \{{date}}</small></h4>
+                  <p>\{{postText}}</p><br>
+                  <h6>Comments:</h6>
                   <div class="col-md-8 col-md-offset-1 meet-comment-box">
                     \{{#each comments}}
                       <p>\{{this}}</p>
                     \{{/each}}
                   </div>
                   <div class="col-md-8 col-md-offset-1">
-                    <input class="comment-input form-control input-md" type="text" placeholder="" required="">
+                    <input class="comment-input form-control input-sm" type="text" placeholder="" required="">
                     <button class="btn btn-default btn-sm comment">Comment</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div><br>
         \{{/each}}
         \{{/if}}
       </script>

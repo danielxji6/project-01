@@ -1,8 +1,12 @@
-.jumbotron {
+body {
   background-image: url(/img/background1.jpg);
+}
+#d_jum {
+  background-color: rgba(255,255,255, 0.4);
   background-size: cover;
   background-repeat: no-repeat;
   color: #050505;
+  margin-bottom: 0px;
 }
 .jumbotron .container {
   height: 180px;
@@ -14,9 +18,23 @@
   margin-right: 12px;
 }
 
-.pull-left {
-  float: left;
+hr {
+  border-color: blue
+  border-width: 3px;
 }
-.pull-right {
-  float: right;
+
+.sub_h {
+  color: #701816;
+}
+
+#msg-list {
+  background-color: rgba(255,255,255, 0.4);
+  border:10px solid rgba(255,255,255, 0.8);
+  border-radius: 50px;
+}
+
+#meet-list {
+  background-color: rgba(255,255,255, 0.4);
+  border:10px solid rgba(255,255,255, 0.8);
+  border-radius: 50px;
 }
