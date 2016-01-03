@@ -115,13 +115,21 @@ app.post('/signup', function (req, res) {
   if (req.user) {
     res.redirect('/main');
   } else {
-    db.User.register(new db.User({ username: req.body.username, phoneNum: req.body.phoneNum, remindText: true }), req.body.password,
-      function (err, newUser) {
-        passport.authenticate('local')(req, res, function () {
-          res.send('User Created!');
-        });
+    // Check if the username or number has used before
+    db.User.findOne({phoneNum: req.body.phoneNum}, function(err, user) {
+      if(user) {
+        res.send("duplicate");
+      } else {
+        // Create user
+        db.User.register(new db.User({ username: req.body.username, phoneNum: req.body.phoneNum, remindText: true }), req.body.password,
+          function (err, newUser) {
+            passport.authenticate('local')(req, res, function () {
+              res.send("User created");
+            });
+          }
+        );
       }
-    );
+    });
   }
 });
 
@@ -201,33 +209,47 @@ app.post('/api/msg', function api_create_msg (req, res) {
   var resData = {};
   newMsg.date = new Date();
   newMsg.match = false;
-  // Find if there's a match message
-  db.User.findOne({phoneNum: newMsg.toNum}, function (err, user) {
-    if(err) { return console.log("ERROR: ", err);}
-    if(user){
-      user.msg.forEach(function (ele, index) {
-        // Check the number and if match before
-        if(ele.toNum == req.user.phoneNum && !ele.match) {
-          ele.match = true;
-          newMsg.match = true;
-          resData.exMsg = ele;
-          sendTextMsg(req.user.phoneNum, newMsg.toNum, newMsg.msgText);
-          user.save(function (err, savedUser) {
-            if(err) { return console.log("ERROR: ", err);}
-          });
-        }
-      });
+  resData.duplicate = false;
+
+  // Find if there's unmatched message to this ex
+  req.user.msg.forEach(function (ele, index) {
+    if (ele.toNum == newMsg.toNum && !ele.match) {
+      console.log("dup");
+      resData.duplicate = true;
+      res.json(resData);
     }
   });
-  db.User.findById(userId, function (err, user) {
-    if(err) { return console.log("ERROR: ", err);}
-    user.msg.push(newMsg);
-    user.save(function (err, savedUser) {
+  if(!resData.duplicate) {
+    console.log("In");
+    // Find if there's a match message
+    db.User.findOne({phoneNum: newMsg.toNum}, function (err, user) {
       if(err) { return console.log("ERROR: ", err);}
-      resData.newMsg = user.msg[user.msg.length-1];
-      res.json(resData);
+      if(user){
+        user.msg.forEach(function (ele, index) {
+          // Check the number and if match before
+          if(ele.toNum == req.user.phoneNum && !ele.match) {
+            ele.match = true;
+            newMsg.match = true;
+            resData.exMsg = ele;
+            sendTextMsg(req.user.phoneNum, newMsg.toNum, newMsg.msgText);
+            user.save(function (err, savedUser) {
+              if(err) { return console.log("ERROR: ", err);}
+            });
+          }
+        });
+      }
     });
-  });
+    // Save the message
+    db.User.findById(userId, function (err, user) {
+      if(err) { return console.log("ERROR: ", err);}
+      user.msg.push(newMsg);
+      user.save(function (err, savedUser) {
+        if(err) { return console.log("ERROR: ", err);}
+        resData.newMsg = user.msg[user.msg.length-1];
+        res.json(resData);
+      });
+    });
+  }
 });
 
 app.put('/api/msg/:msgId', function api_edit_msg (req, res) {

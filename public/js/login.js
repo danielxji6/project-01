@@ -7,7 +7,12 @@ $(document).ready(function() {
     event.preventDefault();
     var data = $('#signup-form').serialize();
     $.post('/signup', data, function (response) {
-      window.location.href = '/main';
+      console.log(response);
+      if (response == "duplicate") {
+        $('#wrongNumber').show();
+      } else {
+        window.location.href = '/main';
+      }
     });
   });
 

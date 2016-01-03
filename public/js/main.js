@@ -8,6 +8,10 @@ $(document).ready(function() {
   var sourceMeet = $("#meet-template").html();
   var templateMeet = Handlebars.compile(sourceMeet);
 
+  Handlebars.registerHelper('formatDate', function(date) {
+    return date.slice(0, 10);
+  });
+
   // list user messages
   $.get('/api/msg', function (msgs) {
     var msgHtml = templateMsg(msgs);
