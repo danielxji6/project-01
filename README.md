@@ -44,7 +44,7 @@ request])
 
 https://still-cliffs-5842.herokuapp.com
 
-Login: guest
-Password: 123
+ * Login: guest
+ * Password: 123
 
 ## 
